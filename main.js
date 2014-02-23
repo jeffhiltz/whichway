@@ -1,42 +1,24 @@
 var config = require('./config').config;
-var nodemailer = require('nodemailer');
+var Mailer = require('./mailer').Mailer;
 var request = require('request');
 var scraper = require('./scraper');
 
-var smtpTransport = nodemailer.createTransport("SMTP", config.nmOptions);
-
-function buildBody(routes) {
-  var body = '';
-  routes.forEach(function (route) {
-    body += route.shortDesc + ': ' + route.currentTime + ',  ';
-  });
-  return body.substring(0, body.length - 3);
-}
-
-function sendRoutes(routes, callback) {
-
-  var mailOptions = {
-    from: config.email.from,
-    to: config.email.recipients.join(", "),
-    subject: config.email.subject,
-    html: buildBody(routes)
-  };
-
-  smtpTransport.sendMail(mailOptions, callback);
-}
+var mailer = new Mailer(config.nmOptions);
 
 request(config.url, function handleResponse(err, resp, body) {
   if (err) {
     console.error(err);
+    process.exit(1);
   } else {
     var routes = scraper.getRoutes(body);
-    sendRoutes(routes, function displayResult(err) {
+    mailer.sendRoutes(config.email, routes, function displayResult(err) {
       if (err) {
         console.error(err);
+        process.exit(2);
       } else {
         console.log('Mail sent!');
+        process.exit(0);
       }
-      process.exit(0);
     });
   }
 });
