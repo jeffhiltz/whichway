@@ -1,7 +1,7 @@
 var config = require('./config').config;
 var nodemailer = require('nodemailer');
 var request = require('request');
-var whichway = require('./whichway');
+var scraper = require('./scraper');
 
 var smtpTransport = nodemailer.createTransport("SMTP", config.nmOptions);
 
@@ -29,7 +29,7 @@ request(config.url, function handleResponse(err, resp, body) {
   if (err) {
     console.error(err);
   } else {
-    var routes = whichway.getRoutes(body);
+    var routes = scraper.getRoutes(body);
     sendRoutes(routes, function displayResult(err) {
       if (err) {
         console.error(err);
