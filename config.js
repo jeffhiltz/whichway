@@ -12,16 +12,23 @@ config.nmOptions = {};
 
 /*
   Each trip will be processed according to the cron-formatted schedule
-  The routes will be retrieved from the URL and compared.  An email will be
-  sent to all emailRecipients listing the suggested routes sorted by the
-  current travel time estimates with the shortest route appearing first.
+  The routes will be retrieved from the URL and compared.  If a defaultRoute
+  has been provided and it is the fastest current route then no email will be 
+  sent.  Otherwise an email will be sent to all emailRecipients listing the
+  suggested routes sorted by the current travel time estimates with the
+  shortest route appearing first.
+
+  The defaultRoute can refer to either the route description as it appears on
+  Google Maps or to the corresponding shortName.
+
+  The trip name will be used for logging.
 */
-//TODO use long or short name for defaultRoute?
 config.trips = [
   {
     name: '',
     schedule: '',
     url: '',
+    defaultRoute: '',
     email: {
       from: '',
       recipients: [],
