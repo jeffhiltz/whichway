@@ -1,2 +1,5 @@
+config.js.clean
+config.js.bak
 coverage/
 node_modules/
+npm-debug.log
