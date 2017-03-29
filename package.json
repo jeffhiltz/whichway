@@ -8,13 +8,24 @@
   "engines": {
     "node": ">= 0.8.26"
   },
+  "scripts": {
+    "run": "node main.js",
+    "test": "mocha test",
+    "watch": "mocha test -w",
+    "cover": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test",
+    "coverReports": "multi='mocha-junit-reporter=test-results.xml spec=-' ./node_modules/istanbul/lib/cli.js cover --print both -- node_modules/mocha/bin/_mocha --reporter mocha-multi test",
+    "codecov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec && ./node_modules/.bin/codecov"
+  },
   "dependencies": {
     "cheerio": "~0.13.1",
+    "cron": "~1.0.3",
     "nodemailer": "~0.6.0",
-    "request": "~2.33.0",
-    "cron": "~1.0.3"
+    "request": "~2.33.0"
   },
   "devDependencies": {
+    "codecov": "^2.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
     "should": "~3.0.1"
   },
   "main": "./main.js"
