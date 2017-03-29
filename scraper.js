@@ -1,6 +1,10 @@
 var cheerio = require('cheerio');
 var config = require('./config').config;
 
+function dummy() {
+  console.log('dummy');
+}
+
 function getSeconds(str) {
   if (!str.match(/\d+\s*[hm]/)) {
     return NaN;
